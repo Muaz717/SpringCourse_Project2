@@ -48,8 +48,8 @@ public class PeopleService {
         peopleRepository.deleteById(id);
     }
 
-    public Optional<Person> getPersonByFullName(String fullName) {
-        return peopleRepository.findByFullName(fullName);
+    public Optional<Person> getPersonByFullName(String name) {
+        return peopleRepository.findByName(name);
     }
 
     public List<Book> getBooksByPersonId(int id) {

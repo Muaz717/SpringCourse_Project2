@@ -98,19 +98,29 @@ public class BooksController {
         return "redirect:/books";
     }
 
-    @PatchMapping("{/id}/release")
+    @PatchMapping("/{id}/release")
     public String release(@PathVariable("id") int id) {
         booksService.release(id);
         return "redirect:/books/" + id;
     }
 
-    @PatchMapping("{/id}/assign")
-    public String assign(@PathVariable("id")int id, @ModelAttribute("person") Person selectedPerson) {
+    @PatchMapping("/{id}/assign")
+    public String assign(@PathVariable("id") int id, @ModelAttribute("person") Person selectedPerson) {
+        // У selectedPerson назначено только поле id, остальные поля - null
         booksService.assign(id, selectedPerson);
         return "redirect:/books/" + id;
     }
 
+    @GetMapping("/search")
+    public String searchPage() {
+        return "books/search";
+    }
 
+    @PostMapping("/search")
+    public String makeSearch(Model model, @RequestParam("query")String query) {
+        model.addAttribute("books", booksService.searchByTitle(query));
+        return "books/search";
+    }
 }
 
 

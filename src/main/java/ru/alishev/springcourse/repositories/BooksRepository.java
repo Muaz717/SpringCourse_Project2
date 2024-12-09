@@ -5,9 +5,10 @@ import org.springframework.stereotype.Repository;
 import ru.alishev.springcourse.models.Book;
 import ru.alishev.springcourse.models.Person;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface BooksRepository extends JpaRepository<Book, Integer> {
-    Optional<Person> findBy();
+    List<Book> findByTitleStartingWith(String title);
 }
