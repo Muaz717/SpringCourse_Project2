@@ -74,6 +74,42 @@ public class BooksController {
         return "redirect:/books";
     }
 
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") int id, Model model) {
+        model.addAttribute("book", booksService.findOne(id));
+        return "books/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@PathVariable("id") int id, @ModelAttribute("book") @Valid Book book,
+                         BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "books/edit";
+        }
+
+        booksService.update(id, book);
+        return "redirect:/books";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id) {
+        booksService.delete(id);
+        return "redirect:/books";
+    }
+
+    @PatchMapping("{/id}/release")
+    public String release(@PathVariable("id") int id) {
+        booksService.release(id);
+        return "redirect:/books/" + id;
+    }
+
+    @PatchMapping("{/id}/assign")
+    public String assign(@PathVariable("id")int id, @ModelAttribute("person") Person selectedPerson) {
+        booksService.assign(id, selectedPerson);
+        return "redirect:/books/" + id;
+    }
+
 
 }
 
